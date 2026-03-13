@@ -22,36 +22,35 @@ public class Biblioteca
 
     public void listarTodos()
     {
-        for (Material material : materiais)
-        {
-            System.out.println(material.getDescricao());
-        }
+        materiais.stream()
+                 .map(Material::getDescricao)
+                 .forEach(System.out::println);
     }
 
-    public boolean buscar(String termo)
+    public void buscar(String termo)
     {
-        for (Material material : materiais)
-        {
-            if (material instanceof Buscavel buscavel)
-            {
-                if (buscavel.contemTermo(termo))
-                {
-                    System.out.println(material.getDescricao());
-                }
-            }
-        }
+        materiais.stream()
+                 .filter(material -> material instanceof Buscavel buscavel && buscavel.contemTermo(termo))
+                 .forEach(material -> System.out.println(material.getDescricao()));
+    }
 
-        return false;
+    public long contarMateriais()
+    {
+        return materiais.stream().count();
+    }
+
+    public void listarPorTipo(Class<?> tipo)
+    {
+        materiais.stream()
+                 .filter(tipos -> tipos.getClass().equals(tipo))
+                 .forEach(material -> System.out.println(material.getDescricao()));
     }
 
     public void notificarTodos(String mensagem)
     {
-        for (Material material : materiais)
-        {
-            if (material instanceof Notificavel notificavel)
-            {
-                notificavel.notificar(mensagem);
-            }
-        }
+        materiais.stream()
+                .filter(Notificavel.class::isInstance)
+                .map(Notificavel.class::cast)
+                .forEach(notificavel -> notificavel.notificar(mensagem));
     }
 }

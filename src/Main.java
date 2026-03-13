@@ -21,12 +21,17 @@ void main()
 
     System.out.println("--------------------------------------------------------");
 
-    if (biblioteca.buscar("Dom"))
-    {
-        System.out.println("Contém o termo");
-    }
+    biblioteca.buscar("Dom Casmurro");
 
     System.out.println("--------------------------------------------------------");
 
     biblioteca.notificarTodos("disponível para retirada");
+
+    System.out.println("--------------------------------------------------------");
+
+    System.out.println("Quantidade de materiais: " + biblioteca.contarMateriais());
+
+    System.out.println("--------------------------------------------------------");
+
+    biblioteca.listarPorTipo(Revista.class);
 }
